@@ -1,40 +1,47 @@
-def call(sring url,sting branch) {
-  pipeline {
-    agent any
+// vars/myPipeline.groovy
+def call(String url, String branch) {
+    pipeline {
+        agent any
 
-    stages {
-        
-        stage('Clone Repo') {
-            steps {
-                git url: "${url}" , branch: "${branch}
+        stages {
+            // Optional: Clean Temp folder to avoid disk space issues
+            stage('Clean Temp') {
+                steps {
+                    echo "Cleaning Temp folder..."
+                    bat 'rmdir /s /q "%TEMP%" && mkdir "%TEMP%"'
+                }
             }
-        }
 
-        stage('Build') {
-            steps {
-                echo "Building the project..."
-                // Example: For Python
-                bat 'echo Build step running...'
+            stage('Clone Repo') {
+                steps {
+                    echo "Cloning repository..."
+                    git url: "${url}", branch: "${branch}"
+                }
             }
-        }
 
-        stage('Test') {
-            steps {
-                echo "Running tests..."
-                // Example: Run test command
-                bat 'echo Tests running...'
+            stage('Build') {
+                steps {
+                    echo "Building the project..."
+                    // Replace this with actual build commands if needed
+                    bat 'echo Build step running...'
+                }
             }
-        }
 
-        stage('Deploy') {
-            steps {
-                echo "Deploying the project..."
-                bat 'echo Deploy step completed!'
+            stage('Test') {
+                steps {
+                    echo "Running tests..."
+                    // Replace this with actual test commands
+                    bat 'echo Tests running...'
+                }
+            }
+
+            stage('Deploy') {
+                steps {
+                    echo "Deploying the project..."
+                    // Replace this with actual deploy commands
+                    bat 'echo Deploy step completed!'
+                }
             }
         }
     }
-}
-
-  
-  
 }

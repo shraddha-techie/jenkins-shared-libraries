@@ -4,14 +4,7 @@ def call(String url, String branch) {
         agent any
 
         stages {
-            // Optional: Clean Temp folder to avoid disk space issues
-            stage('Clean Temp') {
-                steps {
-                    echo "Cleaning Temp folder..."
-                    bat 'rmdir /s /q "%TEMP%" && mkdir "%TEMP%"'
-                }
-            }
-
+            
             stage('Clone Repo') {
                 steps {
                     echo "Cloning repository..."
